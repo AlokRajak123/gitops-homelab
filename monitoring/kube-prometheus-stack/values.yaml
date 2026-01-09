@@ -1,14 +1,9 @@
 grafana:
   adminPassword: admin
   service:
-    type: ClusterIP
-
-  ingress:
-    enabled: false
+    type: NodePort
 
 prometheus:
   service:
-    type: ClusterIP
+    type: NodePort
 
-alertmanager:
-  enabled: true
