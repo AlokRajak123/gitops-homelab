@@ -1,0 +1,14 @@
+grafana:
+  adminPassword: admin
+  service:
+    type: ClusterIP
+
+  ingress:
+    enabled: false
+
+prometheus:
+  service:
+    type: ClusterIP
+
+alertmanager:
+  enabled: true
