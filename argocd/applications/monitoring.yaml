@@ -10,8 +10,19 @@ spec:
     chart: kube-prometheus-stack
     targetRevision: 55.5.0
     helm:
-      valueFiles:
-        - values.yaml
+      skipCrds: true
+      values: |
+        grafana:
+          adminPassword: admin
+          service:
+            type: ClusterIP
+
+        prometheus:
+          service:
+            type: ClusterIP
+
+        alertmanager:
+          enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -19,3 +30,9 @@ spec:
     automated:
       prune: true
       selfHeal: true
+  ignoreDifferences:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      jsonPointers:
+        - /metadata/annotations
+
