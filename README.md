@@ -170,6 +170,46 @@ EOF
 
 ⚠️ Replace <YOUR_GITHUB_USERNAME> before commit.
 
+🔜 NEXT (Very Important for Argo CD)
+
+After pushing:
+1️⃣ Add repo to Argo CD
+✅ What to Enter on This Screen
+✔️ Connection Method
+Via SSH
+✔️ Name
+demo
+(Any name is fine; this is just Argo CD’s internal reference)
+✔️ Project
+default
+✔️ Repository URL
+git@github.com:AlokRajak123/gitops-homelab.git
+
+SSH Private Key Data (MOST IMPORTANT)
+This must be the PRIVATE KEY from the node where you generated SSH keys.
+On k8s-master-1, run:
+cat ~/.ssh/id_ed25519
+You will see:
+-----BEGIN OPENSSH PRIVATE KEY-----
+...
+-----END OPENSSH PRIVATE KEY-----
+
+Copy ENTIRE CONTENT and paste it into:
+SSH private key data
+✔️ Include:
+BEGIN line
+END line
+Everything in between
+▶️ Final Step in UI
+
+Click:
+CONNECT
+
+🧪 Optional (But Recommended) Test From Node
+ssh -T git@github.com
+Expected:
+Hi AlokRajak123! You've successfully authenticated, but GitHub does not provide shell access.
+
 🔹 STEP 8: Push to GitHub
 git add .
 git commit -m "Initial GitOps demo app"
@@ -206,4 +246,5 @@ You should see NGINX Welcome Page 🎉
 ✔ Argo CD auto-sync
 ✔ Kubernetes declarative deployment
 ✔ Interview-grade setup
+
 
