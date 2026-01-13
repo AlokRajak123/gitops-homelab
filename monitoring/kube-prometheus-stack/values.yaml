@@ -1,14 +1,15 @@
 grafana:
+  enabled: true
   adminPassword: admin
   service:
     type: ClusterIP
 
-  ingress:
-    enabled: false
+  defaultDashboardsEnabled: true
 
-prometheus:
-  service:
-    type: ClusterIP
+  additionalDataSources:
+    - name: Prometheus
+      type: prometheus
+      url: http://monitoring-kube-prometheus-prometheus.monitoring:9090
+      access: proxy
+      isDefault: true
 
-alertmanager:
-  enabled: true
