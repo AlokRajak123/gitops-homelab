@@ -72,6 +72,34 @@ mkdir -p ~/gitops-homelab
 cd ~/gitops-homelab
 git init
 
+GitHub disabled password authentication for HTTPS pushes.
+You must use either a Personal Access Token (PAT) or SSH keys.
+GitOps homelab + Argo CD, SSH is the BEST practice.
+
+1️⃣ Generate SSH key on your CentOS node
+ssh-keygen -t ed25519 -C "gitops-homelab"
+2️⃣ Copy the public key
+cat ~/.ssh/id_ed25519.pub
+Copy the full output.
+3️⃣ Add SSH key to GitHub
+
+GitHub → Settings
+SSH and GPG keys
+New SSH key
+Paste key
+Save
+
+4️⃣ Change Git remote to SSH
+git remote remove origin
+git remote add origin git@github.com:AlokRajak123/gitops-homelab.git
+
+Verify:
+git remote -v
+
+5️⃣ Push again
+git push -u origin main
+
+
 
 Create structure:
 
@@ -127,7 +155,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/<YOUR_GITHUB_USERNAME>/gitops-homelab.git
+    repoURL: git@github.com:AlokRajak123/gitops-homelab.git
     targetRevision: main
     path: apps/demo-app
   destination:
@@ -178,3 +206,4 @@ You should see NGINX Welcome Page 🎉
 ✔ Argo CD auto-sync
 ✔ Kubernetes declarative deployment
 ✔ Interview-grade setup
+
