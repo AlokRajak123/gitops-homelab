@@ -6,21 +6,26 @@ metadata:
 spec:
   project: default
 
-  source:
-    repoURL: https://prometheus-community.github.io/helm-charts
-    chart: kube-prometheus-stack
-    targetRevision: 55.5.0
-    helm:
-      skipCrds: true
-      valueFiles:
-        - values.yaml
+source:
+  repoURL: https://prometheus-community.github.io/helm-charts
+  chart: kube-prometheus-stack
+  targetRevision: 55.5.0
+  helm:
+    skipCrds: true
+    values: |
+      grafana:
+        enabled: true
+        adminPassword: admin
+        service:
+          type: NodePort
+          nodePort: 32000
 
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: monitoring
+        defaultDashboardsEnabled: true
 
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+        additionalDataSources:
+          - name: Prometheus
+            type: prometheus
+            url: http://monitoring-kube-prometheus-prometheus.monitoring:9090
+            access: proxy
+            isDefault: true
 
